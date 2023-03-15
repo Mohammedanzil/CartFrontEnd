@@ -1,0 +1,137 @@
+<!-- empty cart -->
+<div *ngIf="cartItems.length==0" class="container mt-5">
+    <div class="row">
+        <div class="col text-center">
+            <!-- empty cart image -->
+            <img src="https://cdn.dribbble.com/users/2046015/screenshots/5973727/06-loader_telega.gif" alt="">
+            <h3>Your Cart is Empty</h3>
+            <button routerLink="" class="btn btn-info mb-4">Shop more</button>
+        </div>
+    </div>
+</div>
+
+
+<!-- cart design  -->
+<div *ngIf="cartItems.length!==0" class="container mt-5 mb-5">
+    <div class="row">
+        <div class="col-lg-8 border rounded p-3 mt-5">
+            <!-- cart table -->
+            <table class="table ">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Product Image</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let product of cartItems; let i=index">
+                        <th>{{i+1}}</th>
+                        <th><img class="ms-5" [src]="product.image" width="50px" alt="Product image"></th>
+                        <th><input type="number" class="form-control mt-1" value="1" style="max-width: 3rem"></th>
+                        <th>${{product.price}}</th>
+                        <th><a (click)="removeItem(product)" class="text-danger btn"><i class="fa-solid fa-trash"></i></a></th>
+                    </tr>
+                </tbody>
+            </table>
+            <div style="float:right;" class="mt-2">
+                <button (click)="emptyCart()" class="btn btn-danger ms-5">Empty Cart</button>
+                <a routerLink="" class="btn btn-primary ms-5">Shop More</a>
+
+            </div>
+        </div>
+        <div class="col-lg-1"></div>
+        <div class="col-lg-3  rounded p-3 mt-5 ">
+            <p>Total: <span class="text-primary">${{grantTotal}}</span></p>
+            <p>Discount: <span>{{discount}}</span></p>
+            <h5 class="animate__animated animate__shakeX text-danger">Grant Total: <span>${{discountTotal}}</span></h5>
+            <hr>
+            <div class="mt-5">
+                <a style="text-decoration: none; float: left;" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="fa-solid fa-tag"></i>Offers</a>
+                <button style="float: right;" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#checkoutModel">Chech Out</button>
+
+            </div>  
+        </div>
+    </div>
+</div>
+
+<!-- offer model design -->
+  <!-- Modal -->
+  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5 text-success" id="staticBackdropLabel"><i class="fa-solid fa-tag"></i>Coupons</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body text-primary">
+           <div *ngIf="grantTotal>0 && grantTotal<10" class="d-flex align-items-center me-auto">
+                <h4>*Special Offers*</h4>
+              <img (click)="discount10percent()" data-bs-dismiss="modal" width="200px" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSs5ZpSJ2qrQD_6qZym2KkM_bvbiR3MVBJ72QFixaP4RdFnCNVog7mrzL9AYSOlV8abXMk&usqp=CAU" alt="promo code">
+           </div>
+           <div *ngIf="grantTotal>=10 && grantTotal<=100" class="d-flex align-items-center me-auto">
+            <h4>*Great deal Offer*</h4>
+          <img (click)="discount20percent()" data-bs-dismiss="modal" width="200px" src="https://cdn4.vectorstock.com/i/1000x1000/94/18/discount-20-percent-in-paper-style-vector-23039418.jpg" alt="promo code">
+       </div>
+       <div *ngIf="grantTotal>100" class="d-flex align-items-center me-auto">
+        <h4>*Grab The Offer.*</h4>
+      <img (click)="discount50percent()" data-bs-dismiss="modal" width="200px" src="https://imdiscounts.net/wp-content/uploads/2016/06/50offtheme.png" alt="promo code">
+   </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- checkout model -->
+  
+  <!-- Modal -->
+  <div class="modal fade" id="checkoutModel" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="staticBackdropLabel">Payment Info</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+         <form class="border p-2">
+            <h5 class="mb-2">Customer Details</h5>
+            <div class="mb-2">
+                <input placeholder="Customer Name" type="text" class="form-control">
+            </div>
+            <div class="mb-2">
+                <input placeholder="Customer Address" type="text" class="form-control">
+            </div>
+            <div class="mb-2">
+                <input placeholder="Customer Pincode" type="text" class="form-control">
+            </div>
+            <div class="mb-2">
+                <input placeholder="Customer Ph:no" type="text" class="form-control">
+            </div>
+            <div class="mb-2">
+                <input placeholder="Customer Email-address" type="text" class="form-control">
+            </div>
+
+         </form>
+         <hr>
+            <h5 class="mb-2">Payment Details</h5>
+            <form class="border p-2">
+                <div class="mb-2">
+                    <input placeholder="Card holder name" type="text" class="form-control">
+                </div>
+                <div class="mb-2">
+                    <input placeholder="Card Number" type="text" class="form-control">
+                </div>
+                
+            </form>
+        </div>
+        <h4><span class="text-primary fw-bolder p-2">{{checkoutMsg}}</span></h4>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" (click)="checkout()" class="btn btn-primary">Make Payment</button>
+         
+        </div>
+      </div>
+    </div>
+  </div>

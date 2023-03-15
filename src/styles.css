@@ -1,1 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Abel&family=DM+Sans:wght@700&family=Exo+2:ital,wght@1,300&family=PT+Sans+Narrow&family=Roboto+Mono:wght@300&display=swap');
+body{
+    font-family: 'Exo 2', sans-serif;
+    font-weight: 700;
+}
+.animate__animated.animate__backInLeft {
+    --animate-duration: 4s;
+  }
